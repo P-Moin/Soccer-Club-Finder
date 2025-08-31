@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
 function App() {
+  const [query, setQuery] = useState("");
+  const clubs = [
+    { name: "Chicago Youth Soccer Club", city: "Chicago" },
+    { name: "Bay Area Strikers", city: "San Jose" },
+    { name: "North Texas SC Academy", city: "Dallas" },
+  ];
+
+  const filtered = clubs.filter((club) =>
+    club.city.toLowerCase().includes(query.toLowerCase())
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: "2rem" }}>
+      <h1>Soccer Club Finder</h1>
+      
+      <input
+        type="text"
+        placeholder="Enter your city"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <h2>Results:</h2>
+      <ul>
+        {filtered.map((club, i) => (
+          <li key={i}>{club.name} — {club.city}</li>
+        ))}
+      </ul>
     </div>
   );
 }
